@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chat app</title>
+</head>
+</head>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+var socket = io();
+socket.on("connect", () => {
+  console.log(socket.id); // PSuv7l1XmAAAD
+});
+/**
+ *  function that emits chat messages
+ **/
+const res = () =>{
+    var input = document.getElementById('input');
+    console.log(input.value);
+    form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (input.value) {
+      socket.emit('chat message', input.value);
+      input.value = '';
+    }
+  });
+}/*
+  var form = document.getElementById('form');
+  var input = document.getElementById('input');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (input.value) {
+      socket.emit('chat message', input.value);
+      input.value = '';
+    }
+  });*/
+
+
+  /** catching emit "hello" to get message "world"
+   * **/
+  socket.on("hello", (arg1) => {
+  console.log(arg1); // prints "world"
+});
+
+
+  function joinRoom (){
+      var roomName = document.getElementById('roomInput').value;
+      console.log(roomName);
+
+      socket.emit('joinRoom',roomName)
+  }
+
+   
+
+</script>
+<body>
+  <br>
+  <input type="text" placeholder="roomName" id="roomInput">
+  <br>
+  <button onclick="joinRoom()"> JOIN ROOM </button>
+  <br>
+  <br>
+  <br>
+  <ul id="messages"></ul>
+  <form id="form" action="">
+    <input id="input" autocomplete="off" /><button onclick="res()">Send</button>
+  </form>
+</body>
+</html>
