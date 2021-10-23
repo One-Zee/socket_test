@@ -1,19 +1,21 @@
+const PORT = process.env.PORT || 2000;
 const express = require('express')
 const socket = require('socket.io')
-const PORT = process.env.PORT || 2000;
 const http = require('http');
+
 const app = express();
 const server = http.createServer(app);
+
 const { Server } = require('socket.io');
 const io = new Server(server);
 
 
-app.use('/',(req,res)=>{
+app.use('/socket',(req,res)=>{
     res.sendFile(__dirname + '/client/index.html')
 })
 
 app.use('/new',(req,res)=>{
-    res.json('come on son')
+    res.send('<h1>New page</h1>')
 })
 var a = 1// user counter
 
@@ -51,7 +53,7 @@ io.on('connection', (socket) => {
         room.push({ room:roomName,socketId:socket.id})
         //console.log(room);
       })
-      
+
 
   });
   
