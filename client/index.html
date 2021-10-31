@@ -23,7 +23,11 @@ const res = () =>{
     e.preventDefault();
     if (input.value) {
       socket.emit('chat message', input.value);
+      var el = document.createElement("p");   // Create a <button> element
+      el.innerHTML = input.value;                   // Insert text
+      document.body.appendChild(el);               // Append <button> to <body>
       input.value = '';
+      
     }
   });
 }/*
@@ -53,7 +57,16 @@ const res = () =>{
       socket.emit('joinRoom',roomName)
   }
 
-   
+  socket.on('newUserJoined',(msg) => {
+    console.log(msg);
+  })
+
+  socket.on('newMessage',(msg) => {
+    console.log(msg);
+    var el = document.createElement("p");   // Create a <button> element
+    el.innerHTML = msg;                   // Insert text
+    document.body.appendChild(el);               // Append <button> to <body>
+  })
 
 </script>
 <body>

@@ -20,7 +20,7 @@ app.use('/new',(req,res)=>{
 var a = 1// user counter
 
 io.on('connection', (socket) => {
-  console.log(socket.id); // PSuv7l1XmAAAD
+  console.log("user socketID: " + socket.id); // PSuv7l1XmAAAD
     /**
      *  Checking user Connection!!
      */
@@ -32,7 +32,8 @@ io.on('connection', (socket) => {
      *  log the chat message
      */
     socket.on('chat message', (msg) => {
-        console.log('message: ' + msg);
+        console.log('user socketID: ' + socket.id +'-> message: ' + msg);
+        socket.broadcast.to(room[0].room).emit('newMessage',msg)
       });
     
     /**
@@ -49,10 +50,13 @@ io.on('connection', (socket) => {
       socket.on('joinRoom',(roomName)=>{
         //console.log(socket.rooms); // Set { <socket.id> }
         socket.join(roomName);
-        console.log(socket.rooms); // Set { <socket.id>, "room1" }
+        //console.log(socket.rooms); // Set { <socket.id>, "room1" }
         room.push({ room:roomName,socketId:socket.id})
-        //console.log(room);
+        console.log(room);
+        socket.broadcast.to(roomName).emit('newUserJoined',{id:socket.id, msg: 'New user joined ' + room})
       })
+
+      
 
 
   });
