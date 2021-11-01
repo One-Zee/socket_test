@@ -71,6 +71,12 @@ const res = () =>{
     document.body.appendChild(el);               // Append <button> to <body>
   })
 
+  socket.on('userLeft',(msg)=>{
+    var el = document.createElement("p");   // Create a <button> element
+    el.innerHTML = msg;                   // Insert text
+    document.body.appendChild(el); 
+  })
+
 </script>
 <body>
   <br>

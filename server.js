@@ -18,6 +18,7 @@ app.use('/new',(req,res)=>{
     res.send('<h1>New page</h1>')
 })
 var a = 1// user counter
+const room = []
 
 io.on('connection', (socket) => {
   console.log("user socketID: " + socket.id); // PSuv7l1XmAAAD
@@ -27,6 +28,7 @@ io.on('connection', (socket) => {
     console.log('a user ' + a++ + ' connected');
     socket.on('disconnect', () => {
       console.log('user disconnected');
+      socket.broadcast.to(room[0].room).emit('userLeft','User by id ' + socket.id + ' disconnected.')
     });
     /**
      *  log the chat message
@@ -42,7 +44,7 @@ io.on('connection', (socket) => {
     socket.emit("hello", "world");
     
     // creating a room array for storing rooms
-    const room = []
+    
     
     /**
      * listener on "joinRoom" sets socketID to specific room
