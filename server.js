@@ -1,6 +1,6 @@
 const PORT = process.env.PORT || 2000;
 const express = require('express')
-const socket = require('socket.io')
+//const socket = require('socket.io')
 const http = require('http');
 
 const app = express();
@@ -53,7 +53,7 @@ io.on('connection', (socket) => {
         //console.log(socket.rooms); // Set { <socket.id>, "room1" }
         room.push({ room:roomName,socketId:socket.id})
         console.log(room);
-        socket.broadcast.to(roomName).emit('newUserJoined',{id:socket.id, msg: 'New user joined ' + room})
+        socket.broadcast.to(roomName).emit('newUserJoined',{id:socket.id, msg: 'New user joined '})
       })
 
       

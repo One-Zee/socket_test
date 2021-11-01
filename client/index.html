@@ -59,6 +59,9 @@ const res = () =>{
 
   socket.on('newUserJoined',(msg) => {
     console.log(msg);
+    var el = document.createElement("p");   // Create a <button> element
+    el.innerHTML = msg.msg + ' ' + msg.id;                   // Insert text
+    document.body.appendChild(el);   
   })
 
   socket.on('newMessage',(msg) => {
