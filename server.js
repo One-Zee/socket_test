@@ -11,12 +11,9 @@ const io = new Server(server);
 
 
 app.use('/socket',(req,res)=>{
-    res.sendFile(__dirname + '/client/index.html')
+    res.send('conn succesfull')
 })
 
-app.use('/new',(req,res)=>{
-    res.send('<h1>New page</h1>')
-})
 var a = 1// user counter
 const room = []
 
@@ -28,7 +25,9 @@ io.on('connection', (socket) => {
     console.log('a user ' + a++ + ' connected');
     socket.on('disconnect', () => {
       console.log('user disconnected');
-      socket.broadcast.to(room[0].room).emit('userLeft','User by id ' + socket.id + ' disconnected.')
+      if(room == []){
+        socket.broadcast.to(room[0].room).emit('userLeft','User by id ' + socket.id + ' disconnected.')
+      }
     });
     /**
      *  log the chat message
@@ -55,7 +54,7 @@ io.on('connection', (socket) => {
         //console.log(socket.rooms); // Set { <socket.id>, "room1" }
         room.push({ room:roomName,socketId:socket.id})
         console.log(room);
-        socket.broadcast.to(roomName).emit('newUserJoined',{id:socket.id, msg: 'New user joined '})
+        socket.broadcast.to(roomName).emit('newUserJoined',{ id:socket.id , msg: 'New user joined ' })
       })
 
       

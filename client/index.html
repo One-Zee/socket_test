@@ -30,53 +30,41 @@ const res = () =>{
       
     }
   });
-}/*
-  var form = document.getElementById('form');
-  var input = document.getElementById('input');
-
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    if (input.value) {
-      socket.emit('chat message', input.value);
-      input.value = '';
-    }
-  });*/
-
-
+}
   /** catching emit "hello" to get message "world"
    * **/
   socket.on("hello", (arg1) => {
   console.log(arg1); // prints "world"
 });
 
-
+///////////////////////////////////////
   function joinRoom (){
       var roomName = document.getElementById('roomInput').value;
       console.log(roomName);
 
       socket.emit('joinRoom',roomName)
   }
-
+//////////////////////////////////////
   socket.on('newUserJoined',(msg) => {
     console.log(msg);
     var el = document.createElement("p");   // Create a <button> element
     el.innerHTML = msg.msg + ' ' + msg.id;                   // Insert text
     document.body.appendChild(el);   
   })
-
+//////////////////////////////////////////
   socket.on('newMessage',(msg) => {
     console.log(msg);
     var el = document.createElement("p");   // Create a <button> element
     el.innerHTML = msg;                   // Insert text
     document.body.appendChild(el);               // Append <button> to <body>
   })
-
+///////////////////////////////////////////
   socket.on('userLeft',(msg)=>{
     var el = document.createElement("p");   // Create a <button> element
     el.innerHTML = msg;                   // Insert text
     document.body.appendChild(el); 
   })
-
+/////////////////////////////////////////
 </script>
 <body>
   <br>
