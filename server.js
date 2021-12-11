@@ -5,9 +5,14 @@ const http = require('http');
 
 const app = express();
 const server = http.createServer(app);
+const corsopt = {
+  cors: {
+    origin: "*",
+  }
+}
 
 const { Server } = require('socket.io');
-const io = new Server(server);
+const io = new Server(server, corsopt);
 
 
 app.use('/socket',(req,res)=>{
