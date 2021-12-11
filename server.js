@@ -6,10 +6,9 @@ const http = require('http');
 const app = express();
 const server = http.createServer(app);
 const corsOpt = {
-  cors: {
+  cors: { 
     origin: "*",
     methods: ["GET", "POST"],
-    credentials: true,
     allowEIO3: true // false by default
   }
 }
