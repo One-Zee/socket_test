@@ -5,14 +5,17 @@ const http = require('http');
 
 const app = express();
 const server = http.createServer(app);
-const corsopt = {
+const corsOpt = {
   cors: {
     origin: "*",
+    methods: ["GET", "POST"],
+    credentials: true,
+    allowEIO3: true // false by default
   }
 }
 
 const { Server } = require('socket.io');
-const io = new Server(server, corsopt);
+const io = new Server(server, corsOpt);
 
 
 app.use('/socket',(req,res)=>{
