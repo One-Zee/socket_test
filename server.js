@@ -34,7 +34,7 @@ io.on('connection', (socket) => {
      */
     socket.on('chat message', (msg) => {
         console.log('user socketID: ' + socket.id +'-> message: ' + msg);
-        socket.broadcast.to(room[0].room).emit('newMessage',msg)
+        socket.broadcast.to(room[0].room).emit('newMessage',{msg,id:socket.id})
       });
     
     /**

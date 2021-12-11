@@ -16,9 +16,9 @@ socket.emit('joinRoom','roomName')
 
 ####  Listen to **'newMessage'** 
 ```
-socket.on('newMessage',(msg) => {
-    // in here display the message to DOM
-    console.log(msg)
+socket.on('newMessage',(obj) => {
+    // in here display the message and socket id of sender to DOM 
+    console.log(obj.msg , obj.id)
   })
 ```
 
