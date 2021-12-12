@@ -23,9 +23,9 @@ app.use('/socket',(req,res)=>{
 })*/
 
 var a = 1// user counter
-const room = []
 
 io.on('connection', (socket) => {
+  let room = []
   console.log("user socketID: " + socket.id); // PSuv7l1XmAAAD
     /**
      *  Checking user Connection!!
@@ -33,17 +33,19 @@ io.on('connection', (socket) => {
     console.log('a user ' + a++ + ' connected');
     socket.on('disconnect', () => {
       console.log('user disconnected');
-      if(room == []){
+      if(room[0] !== undefined){
         socket.broadcast.to(room[0].room).emit('userLeft','User by id ' + socket.id + ' disconnected.')
       }
     });
     /**
      *  log the chat message
      */
-    socket.on('chat message', (obj) => {
-        console.log('user socketID: ' + socket.id +'-> message: ' + obj.msg);
-        console.log('soba: ',obj.room);
-        socket.broadcast.to(obj.room).emit('newMessage',{msg:obj.msg , id:socket.id})
+    socket.on('chat message', (msg) => {
+        console.log('user socketID: ' + socket.id +'-> message: ' + msg);
+        if(room[0] !== undefined){
+        console.log('soba: ',room[0].room);
+        socket.broadcast.to(room[0].room).emit('newMessage',{msg, id:socket.id})
+        }
       });
     
     /**
@@ -61,8 +63,12 @@ io.on('connection', (socket) => {
         //console.log(socket.rooms); // Set { <socket.id> }
         socket.join(roomName);
         //console.log(socket.rooms); // Set { <socket.id>, "room1" }
+        if(room[0] !== undefined){
+          socket.leave(room[0].room)
+          room = []
+        }
         room.push({ room:roomName,socketId:socket.id})
-        console.log(room);
+        console.log(room[0]);
         socket.broadcast.to(roomName).emit('newUserJoined',{ id:socket.id , msg: 'New user joined ' })
       })
 
