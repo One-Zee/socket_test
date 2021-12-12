@@ -9,17 +9,18 @@ const corsOpt = {
   cors: { 
     origin: "*",
     methods: ["GET", "POST"],
-    allowEIO3: true // false by default
+    //allowEIO3: true // false by default
+    
   }
 }
 
 const { Server } = require('socket.io');
 const io = new Server(server, corsOpt);
 
-
+/*
 app.use('/socket',(req,res)=>{
     res.send('conn succesfull')
-})
+})*/
 
 var a = 1// user counter
 const room = []
@@ -39,9 +40,10 @@ io.on('connection', (socket) => {
     /**
      *  log the chat message
      */
-    socket.on('chat message', (msg) => {
-        console.log('user socketID: ' + socket.id +'-> message: ' + msg);
-        socket.broadcast.to(room[0].room).emit('newMessage',{msg,id:socket.id})
+    socket.on('chat message', (obj) => {
+        console.log('user socketID: ' + socket.id +'-> message: ' + obj.msg);
+        console.log('soba: ',obj.room);
+        socket.broadcast.to(obj.room).emit('newMessage',{msg:obj.msg , id:socket.id})
       });
     
     /**
