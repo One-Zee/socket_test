@@ -34,3 +34,11 @@ socket.on('newUserJoined',(msg) => {
     console.log(msg);
   })
 ```
+
+### Listen to event `userLeft` when user disconnects
+```
+  socket.on('userLeft',(msg)=>{
+    // display msg in DOM
+    console.log(msg);
+  })
+```
