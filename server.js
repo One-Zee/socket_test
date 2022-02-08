@@ -1,6 +1,5 @@
 const PORT = process.env.PORT || 2000;
 const express = require('express')
-//const socket = require('socket.io')
 const http = require('http');
 
 const app = express();
@@ -17,10 +16,8 @@ const corsOpt = {
 const { Server } = require('socket.io');
 const io = new Server(server, corsOpt);
 
-/*
-app.use('/socket',(req,res)=>{
-    res.send('conn succesfull')
-})*/
+app.use(express.static(__dirname+'/dist'))
+
 
 var a = 1// user counter
 
@@ -53,16 +50,12 @@ io.on('connection', (socket) => {
      */
     socket.emit("hello", "world");
     
-    // creating a room array for storing rooms
-    
     
     /**
      * listener on "joinRoom" sets socketID to specific room
      */
       socket.on('joinRoom',(roomName)=>{
-        //console.log(socket.rooms); // Set { <socket.id> }
         socket.join(roomName);
-        //console.log(socket.rooms); // Set { <socket.id>, "room1" }
         if(room[0] !== undefined){
           socket.leave(room[0].room)
           room = []
